@@ -44,7 +44,7 @@ const AbacusColumn = ({ column }) => (
     <div className="abacus-column">
         <div className={`upper-beads ${column.upper > 0 ? 'filled' : ''}`}></div>
         <div className="lower-segment">
-            {[...Array(5)].map((_, index) => (
+            {[...Array(4)].map((_, index) => (
                 <div
                     key={index}
                     className={`lower-bead ${index < column.lower ? 'filled' : ''}`}
@@ -57,7 +57,7 @@ const AbacusColumn = ({ column }) => (
 // Component to render an abacus state
 const AbacusState = ({ number, state }) => (
     <div className="abacus-card">
-        <h3>Number: {number}</h3>
+        <h3 className="number">Number: {number}</h3>
         <div className="abacus-body">
             {state.map((column, index) => (
                 <AbacusColumn key={index} column={column} />
@@ -69,7 +69,7 @@ const AbacusState = ({ number, state }) => (
 // Main App component
 const App = () => {
     const limit = 100;
-    const [randomAbacusStates, setRandomAbacusStates] = useState(generateRandomStates(limit, 15));
+    const [randomAbacusStates, setRandomAbacusStates] = useState(generateRandomStates(limit, 20));
 
     function generateRandomStates(limit, count) {
         const randomNumbers = Array.from({ length: count }, () => Math.floor(Math.random() * (limit + 1)));
@@ -80,12 +80,12 @@ const App = () => {
     }
 
     const refreshStates = () => {
-        setRandomAbacusStates(generateRandomStates(limit, 15));
+        setRandomAbacusStates(generateRandomStates(limit, 20));
     };
 
     return (
-        <div>
-            <button onClick={refreshStates} className="refresh-button">Refresh</button>
+      <div className="app-container">
+            <button onClick={refreshStates} className="refresh-button no-print">Refresh</button>
             <div className="abacus-container">
                 {randomAbacusStates.map(({ number, state }, index) => (
                     <AbacusState key={index} number={number} state={state} />

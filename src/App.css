@@ -1,6 +1,28 @@
+@media print {
+  .app-container {
+      width: 210mm; /* A4 width */
+      height: 297mm; /* A4 height */
+      margin: 0 auto;
+      padding: 10mm;
+      box-sizing: border-box;
+      background: white;
+  }
+  .refresh-button, .no-print {
+    display: none !important; /* Hide refresh button when printing */
+}
+  .number {
+    display: none; /*hide number when printing*/
+  }
+  .upper-beads.filled, 
+  .lower-bead.filled {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+  }
+}
+
 .abacus-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   padding: 20px;
 }
