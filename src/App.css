@@ -1,0 +1,71 @@
+.abacus-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.abacus-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.abacus-body {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.abacus-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upper-beads {
+  width: 20px;
+  height: 50px;
+  border: 1px solid #333;
+  margin-bottom: 5px;
+  background-color: #fff;
+}
+
+.upper-beads.filled {
+  background-color: #33ff57;
+}
+
+.lower-segment {
+  display: flex;
+  flex-direction: column;
+}
+
+.lower-bead {
+  width: 20px;
+  height: 10px;
+  border: 1px solid #333;
+  margin: 2px 0;
+  background-color: #fff;
+}
+
+.lower-bead.filled {
+  background-color: #33ff57;
+}
+
+.refresh-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}

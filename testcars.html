@@ -1,0 +1,109 @@
+// Simulate an abacus counting system
+function abacusFillArray(limit) {
+    const abacusArray = [];
+
+    // Function to represent the state of an abacus for a number
+    function getAbacusState(number) {
+        const abacus = [];
+
+        let current = number;
+        let column = 0;
+
+        while (current > 0) {
+            const lowerBeads = current % 5; // Beads below the horizontal bar
+            const upperBeads = Math.floor((current % 10) / 5); // Beads above the horizontal bar
+
+            abacus[column] = {
+                lower: lowerBeads,
+                upper: upperBeads
+            };
+
+            current = Math.floor(current / 10); // Move to the next place value
+            column++;
+        }
+
+        // Fill remaining columns with zeroes
+        while (abacus.length < Math.ceil(Math.log10(limit))) {
+            abacus.push({ lower: 0, upper: 0 });
+        }
+
+        return abacus.reverse(); // Reverse to align higher place values to the left
+    }
+
+    for (let i = 0; i <= limit; i++) {
+        abacusArray.push(getAbacusState(i));
+    }
+
+    return abacusArray;
+}
+
+// Function to generate random numbers and their abacus states
+function generateRandomAbacusStates(limit, count) {
+    const randomNumbers = Array.from({ length: count }, () => Math.floor(Math.random() * (limit + 1)));
+    const abacusStates = randomNumbers.map(number => ({ number, state: abacusFillArray(limit)[number] }));
+    return abacusStates;
+}
+
+// Function to create a graphical representation of the abacus states
+function renderAbacusStates(states) {
+    const container = document.createElement('div');
+    container.style.display = 'grid';
+    container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+    container.style.gap = '20px';
+    container.style.margin = '20px';
+
+    states.forEach(({ number, state }) => {
+        const abacusCard = document.createElement('div');
+        abacusCard.style.border = '1px solid #ccc';
+        abacusCard.style.padding = '10px';
+        abacusCard.style.textAlign = 'center';
+        abacusCard.style.borderRadius = '8px';
+        abacusCard.style.backgroundColor = '#f9f9f9';
+
+        const title = document.createElement('h3');
+        title.textContent = `Number: ${number}`;
+        title.style.marginBottom = '10px';
+
+        const abacusBody = document.createElement('div');
+        abacusBody.style.display = 'flex';
+        abacusBody.style.justifyContent = 'center';
+        abacusBody.style.gap = '10px';
+
+        state.forEach(column => {
+            const columnDiv = document.createElement('div');
+            columnDiv.style.display = 'flex';
+            columnDiv.style.flexDirection = 'column';
+            columnDiv.style.alignItems = 'center';
+
+            const upperBeads = document.createElement('div');
+            upperBeads.style.height = '50px';
+            upperBeads.style.width = '20px';
+            upperBeads.style.border = '1px solid #333';
+            upperBeads.style.marginBottom = '5px';
+            upperBeads.style.backgroundColor = column.upper > 0 ? '#ff5733' : '#fff';
+
+            const lowerBeads = document.createElement('div');
+            lowerBeads.style.height = '50px';
+            lowerBeads.style.width = '20px';
+            lowerBeads.style.border = '1px solid #333';
+            lowerBeads.style.marginTop = '5px';
+            lowerBeads.style.backgroundColor = column.lower > 0 ? '#33ff57' : '#fff';
+
+            columnDiv.appendChild(upperBeads);
+            columnDiv.appendChild(lowerBeads);
+            abacusBody.appendChild(columnDiv);
+        });
+
+        abacusCard.appendChild(title);
+        abacusCard.appendChild(abacusBody);
+        container.appendChild(abacusCard);
+    });
+
+    document.body.appendChild(container);
+}
+
+// Example usage
+const limit = 100; // Generate abacus states for numbers up to 100
+const count = 10; // Display 10 randomly picked numbers
+const randomAbacusStates = generateRandomAbacusStates(limit, count);
+renderAbacusStates(randomAbacusStates);
